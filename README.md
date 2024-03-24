@@ -55,7 +55,7 @@ django-admin startproject project
 
 ### Step 7: Connect to PostgreSQL
 
-1. Deploy a PostgreSQL database using Railway.
+1. Deploy a PostgreSQL database using https://railway.app/ .
 2. Start a New Project and choose to Provision PostgreSQL.
 3. Wait for the provisioning process to complete.
 4. Click on your PostgreSQL instance and navigate to Variables.
@@ -72,6 +72,7 @@ DATABASES = {
         'PORT': PGPORT               # Replace with PGPORT from Railway Variables
     }
 }
+```
 
 
 
