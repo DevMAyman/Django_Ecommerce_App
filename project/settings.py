@@ -23,7 +23,7 @@ load_dotenv(dotenv_path)
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#v!4=fxnk*bsol9(i1z+*3kvpja8m=!%%gtn8lz@l$ml!(3-j)'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ecommerce',
         'USER':'root',
-        'PASSWORD': 'mysql@123',
+        'PASSWORD': os.environ.get('LOCAL_PASSWORD'),
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }
