@@ -88,10 +88,21 @@ DATABASES = {
     }
 }
 ```
+### Step 8: Configure .env file 
 
+1. Add .env file. 
+2. Add its name in .gitignore file.
+3. Add your DB passwords and secret key.
+4. Add python-dotenv
+```bash
+pip install python-dotenv
+```
+5. Add this lines in settings.py file
+  import os
+  from dotenv import load_dotenv
+  dotenv_path = os.path.join(BASE_DIR, 'config', '.env')
+  load_dotenv(dotenv_path)
 
-
-
-
-
+6. Then get your secrets and password from .env
+os.environ.get('Name_in_env')
 
