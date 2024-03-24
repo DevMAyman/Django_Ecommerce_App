@@ -60,6 +60,36 @@ pip3 install django
 django-admin startproject project
 ```
 
+### Step 7: Connect to postgres
+
+Go to this website to deploy your postgres 
+(https://railway.app/)
+
+Then click on Start a New Project
+Then choose Provision PostgreSQL
+... Wait some time
+Then click on Postgres
+Then go to Variables
+
+Now we have been finished all website configration 
+
+Go to your project inside project directory go to settings.py scroll down till DATABASE object
+Nearly at line 76 
+go to webiste and fill DATABASE object with this values.
+Each property in DATABASE object will be copied from Variables at website and its name is same with a liite change.
+for example PASSWORD in website in property called PGPASSWORD while in your project called PASSWORD.
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME':'railway',
+        'USER':  PGUSER,
+        'PASSWORD': PGPASSWORD,
+        'PORT':' PGPORT
+    }
+}
+
+
 
 
 
