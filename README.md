@@ -40,13 +40,6 @@ source ./bin/activate
 ```
 It appears in two picture that my prompt changes when i active virtualenv than before. 
 
-BEFORE
-
-![image](https://github.com/DevMAyman/Django_Ecommerce_App/assets/123351964/5090eb70-4b7b-4aa4-b6be-f90a00524ce1)
-
-AFTER
-
-![image](https://github.com/DevMAyman/Django_Ecommerce_App/assets/123351964/d9b3e594-85d6-4a88-a43d-0c10feea6f24)
 
 ### Step 5: Install Django
 
@@ -60,35 +53,25 @@ pip3 install django
 django-admin startproject project
 ```
 
-### Step 7: Connect to postgres
+### Step 7: Connect to PostgreSQL
 
-Go to this website to deploy your postgres 
-(https://railway.app/)
+1. Deploy a PostgreSQL database using Railway.
+2. Start a New Project and choose to Provision PostgreSQL.
+3. Wait for the provisioning process to complete.
+4. Click on your PostgreSQL instance and navigate to Variables.
 
-Then click on Start a New Project
-Then choose Provision PostgreSQL
-... Wait some time
-Then click on Postgres
-Then go to Variables
+Once the website configuration is complete, configure your project's `settings.py` file as follows:
 
-Now we have been finished all website configration 
-
-Go to your project inside project directory go to settings.py scroll down till DATABASE object
-Nearly at line 76 
-go to webiste and fill DATABASE object with this values.
-Each property in DATABASE object will be copied from Variables at website and its name is same with a liite change.
-for example PASSWORD in website in property called PGPASSWORD while in your project called PASSWORD.
-
+```python
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'railway',
-        'USER':  PGUSER,
-        'PASSWORD': PGPASSWORD,
-        'PORT':' PGPORT
+        'NAME': 'railway',           # Replace with your database name
+        'USER':  PGUSER,             # Replace with PGUSER from Railway Variables
+        'PASSWORD': PGPASSWORD,      # Replace with PGPASSWORD from Railway Variables
+        'PORT': PGPORT               # Replace with PGPORT from Railway Variables
     }
 }
-
 
 
 
