@@ -106,3 +106,13 @@ pip install python-dotenv
 6. Then get your secrets and password from .env
 os.environ.get('Name_in_env')
 
+### Step 9: Do not forget add requirements.txt
+
+Like package.json, in python we have requirements.txt file.
+In this file we lock all packages we use it in our application.
+When someone clone our project, just write this command to add all package in his project
+
+```bash
+pip install -r requirements.txt
+```
+
