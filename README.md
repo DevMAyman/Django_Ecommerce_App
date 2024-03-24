@@ -109,8 +109,8 @@ os.environ.get('Name_in_env')
 ### Step 9: Do not forget add requirements.txt
 
 Like package.json, in python we have requirements.txt file.
-In this file we lock all packages we use it in our application.
-When someone clone our project, just write this command to add all package in his project
+In this file we lock all packages we use them in our application.
+When someone clone our project, just write this command to add all packages in his project
 
 ```bash
 pip install -r requirements.txt
