@@ -74,6 +74,21 @@ DATABASES = {
 }
 ```
 
+If you want connect locally on mysql use that
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ecommerce', # Create DB with that name first
+        'USER':'root',
+        'PASSWORD': 'mysql@123',
+        'HOST': '127.0.0.1',
+        'PORT': '3306'
+    }
+}
+```
+
 
 
 
