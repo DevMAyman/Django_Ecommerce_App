@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'Shipment.apps.ShipmentConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,12 +78,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce',
-        'USER':'root',
-        'PASSWORD': os.environ.get('LOCAL_PASSWORD'),
-        'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',           # Replace with your database name
+        'USER':  'postgres',             # Replace with PGUSER from Railway Variables
+        'PASSWORD': os.environ.get('REMOTE_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
+        'PORT': '40317'               # Replace with PGPORT from Railway Variables
     }
 }
 
