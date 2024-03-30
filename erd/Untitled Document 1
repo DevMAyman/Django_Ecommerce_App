@@ -1,0 +1,46 @@
+
+product
+--------
+image
+images[]
+ratint (computed)
+
+_____________________________________
+
+rating
+-------
+user_id fk pk
+product_id fk pk
+user_rate 
+
+_____________________________________
+
+cart
+-----
+cart_id pk
+customer_id
+_____________________________________
+
+cart_item
+----------
+cart_item_id
+quantity
+product_id fk
+cart_id fk
+
+
+
+Nasser => Shipment, odrer, order_item
+--------------------------------------
+Khaled => product, category, rating
+--------------------------------------
+Mostafa => cart, cart_item, wishlist
+--------------------------------------
+Ayman => customer, payment
+
+
+
+
+
+
+
