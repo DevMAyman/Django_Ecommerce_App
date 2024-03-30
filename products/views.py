@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from django.http import HttpResponse
-from rest_framework import status, filters,viewsets
+from rest_framework import status, filters,viewsets, permissions
 from rest_framework.decorators import api_view
 from .models import Product,ProductImage,Rating
 from .serializers import ProductSerializer,ProductImageSerializer,RatingSerializer
+from user import  authentication
 
 @api_view(['GET'])
 def GetAllProducts(request):
@@ -48,6 +49,11 @@ def getProductById(request, id):
         return Response(serializer.data,status.HTTP_200_OK)
     
 
+
+
+
 class Viewset_Ratings(viewsets.ModelViewSet):
+    authentication_classes=(authentication.CustomUserAuthentication,)
+    permission_classes=(permissions.IsAuthenticated,)
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer

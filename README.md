@@ -121,4 +121,76 @@ When someone clone our project, just write this command to add all packages in h
 pip install -r requirements.txt
 ```
 
+### Add app for django project
+
+1. First run this command to create an app
+
+```bash
+python manage.py startapp product
+```
+
+2. Add this app to settings.py file 
+
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'product.apps.ProductConfig',
+]
+```
+
+3. Make url for this 
+
+4. Make superuser
+
+```bash
+python manage.py createsuperuser
+```
+
+5. Add your model to admin.py
+
+```python
+from django.contrib import admin
+from .model import Product
+
+admin.site.register(Product)
+```
+
+
+6. Make our model
+
+
+
+
+### Step 10: Djanfo REST framework
+1. Install django rest framework
+
+```bash
+pip install djangorestframework
+```
+Do not forget 
+```bash
+pip freeze > requirements.txt
+```
+
+2. Add serializers.py file in your app
+Turn data in orm to json
+
+in file import rest framework
+```python
+from rest_framework import serializers
+from product.models import Product
+
+class ProductSerializers(serializers.ModelSerializer):
+  class Meta:
+    model:Product
+    fields= '__all__'
+
+```
+
+# Read about uuid and slug , do not out put data with pk 
 
