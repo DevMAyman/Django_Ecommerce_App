@@ -26,6 +26,7 @@ class LoginApi(views.APIView):
         resp = response.Response()
         resp.set_cookie(key='jwt',value=token, httponly=True)
         return resp
+ 
     
 class UserApi(views.APIView):
     authentication_classes=(authentication.CustomUserAuthentication,)
@@ -37,14 +38,13 @@ class UserApi(views.APIView):
         return response.Response(serializer.data)
     
 class Logout(views.APIView):
-    authentication_classes=(authentication.CustomUserAuthentication)
-    permission_classes=(permissions.IsAuthenticated)
+    authentication_classes=(authentication.CustomUserAuthentication,)
+    permission_classes=(permissions.IsAuthenticated,)
 
     def post(self,request):
         resp = response.Response()
         resp.delete_cookie("jwt")
         resp.data={"message":"so long"}
-
         return resp
 
 

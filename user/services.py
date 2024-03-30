@@ -18,6 +18,7 @@ class UserDataClass:
     first_name: str
     last_name: str
     email: str
+    image: str
     password: str = None
     id: int = None
 
@@ -27,6 +28,7 @@ class UserDataClass:
             first_name=user.first_name,
             last_name=user.last_name,
             email=user.email,
+            image=user.image,
             id=user.id
         )
 
@@ -35,6 +37,7 @@ def create_user(user_dc: "UserDataClass") -> "UserDataClass":
         first_name=user_dc.first_name,
         last_name=user_dc.last_name,
         email=user_dc.email,
+        image= user_dc.image
     )
     if user_dc.password is not None:
         instance.set_password(user_dc.password)

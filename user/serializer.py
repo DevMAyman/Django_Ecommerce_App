@@ -6,6 +6,7 @@ class UserSerializer(serializers.Serializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     email = serializers.CharField()
+    image = serializers.ImageField()
     password = serializers.CharField(write_only=True) #!Do not return password ever in api response
     
 
