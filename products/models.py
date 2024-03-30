@@ -1,13 +1,11 @@
 from django.db import models
 from django.utils import timezone
+from categories.models import Category 
 
 
 # Create your models here.
 
-class Category(models.Model):
-    name = models.CharField(max_length=30)
-    def __str__(self) :
-        return self.name
+
 
 
 class Product(models.Model):
