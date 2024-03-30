@@ -1,9 +1,15 @@
-from django.urls import path 
+from django.urls import path,include 
 from . import views
+from rest_framework.routers import DefaultRouter
+
+
+
+router = DefaultRouter()
+router.register('',views.Viewset_Products)
+router.register('product/images',views.Viewset_ProductImages)
+
 
 urlpatterns=[
-    path('', views.GetProducts),
-    path('<int:id>', views.FBV_pk),
-
+    path('',include(router.urls)),
 
 ]
