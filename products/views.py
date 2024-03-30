@@ -8,6 +8,7 @@ from .serializers import ProductSerializer,ProductImageSerializer,RatingSerializ
 
 @api_view(['GET'])
 def GetAllProducts(request):
+       
     #GET
        if request.method == 'GET':
         queryset = Product.objects.all()
@@ -50,4 +51,3 @@ def getProductById(request, id):
 class Viewset_Ratings(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
-   
