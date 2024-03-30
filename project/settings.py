@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from decouple import config
-from decouple import config
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -38,12 +37,16 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'payment.apps.PaymentConfig',
     'user',
+    'cart',
+    'products.apps.ProductsConfig',
+    'categories.apps.CategoriesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework'
 ]
 
 
@@ -83,7 +86,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djangoo',
+        'NAME': 'ecommerce',
         'USER':'root',
         'PASSWORD': os.environ.get('LOCAL_PASSWORD'),
         'HOST': '127.0.0.1',

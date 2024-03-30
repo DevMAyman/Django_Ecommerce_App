@@ -4,6 +4,7 @@ from categories.models import Category
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from user.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -28,7 +29,7 @@ class ProductImage(models.Model):
 
 
 class Rating(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='ratings')
     user_rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
 

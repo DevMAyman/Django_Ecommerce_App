@@ -11,9 +11,9 @@ class Payment(models.Model):
 
 
 #!create payment every time user created 
-@receiver(post_save, sender=User)
-def create_user_payment(sender, instance, created, **kwargs):
-    if created:
-        Payment.objects.create(User=instance)
+# @receiver(post_save, sender=User)
+# def create_user_payment(sender, instance, created, **kwargs):
+#     if created:
+#         Payment.objects.create(User=instance)
     
 
