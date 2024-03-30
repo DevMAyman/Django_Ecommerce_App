@@ -1,6 +1,8 @@
+import datetime
+
 from django.core.exceptions import ValidationError
 from django.db import models
-import datetime
+
 
 class Shipment(models.Model):
     address = models.CharField(max_length=100)
