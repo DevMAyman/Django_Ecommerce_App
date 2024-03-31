@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
-
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,7 +22,8 @@ load_dotenv(dotenv_path)
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = r's!12zl_nvk@^gyzg@2*-9&qx$20w9#qzv%oc4gbmsoot8c*vl&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -80,11 +80,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',           # Replace with your database name
-        'USER':  'postgres',             # Replace with PGUSER from Railway Variables
-        'PASSWORD': os.environ.get('REMOTE_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
-        'PORT': '40317'               # Replace with PGPORT from Railway Variables
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Ecommerce',           # Replace with your database name
+        'USER':  'root',             # Replace with PGUSER from Railway Variables
+        'PASSWORD': 'Shab_jdeed808',      # Replace with PGPASSWORD from Railway Variables
+        'PORT': '3306',               # Replace with PGPORT from Railway Variables
+        'HOST' : '127.0.0.1'
     }
 }
 
