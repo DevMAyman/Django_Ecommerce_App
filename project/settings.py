@@ -22,8 +22,7 @@ load_dotenv(dotenv_path)
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.environ.get('SECRET_KEY')
-SECRET_KEY = r's!12zl_nvk@^gyzg@2*-9&qx$20w9#qzv%oc4gbmsoot8c*vl&'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -83,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Ecommerce',           # Replace with your database name
         'USER':  'root',             # Replace with PGUSER from Railway Variables
-        'PASSWORD': 'Shab_jdeed808',      # Replace with PGPASSWORD from Railway Variables
+        'PASSWORD': os.environ.get('REMOTE_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
         'PORT': '3306',               # Replace with PGPORT from Railway Variables
         'HOST' : '127.0.0.1'
     }
