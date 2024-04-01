@@ -29,7 +29,7 @@ class ProductImage(models.Model):
 
 
 class Rating(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,limit_choices_to={'is_superuser': 0})
     product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='ratings')
     user_rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
 

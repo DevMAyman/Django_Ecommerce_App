@@ -49,10 +49,11 @@ def create_user(user_dc: "UserDataClass") -> "UserDataClass":
 def user_email_selector(email:str) -> "User":
     return models.User.objects.filter(email=email).first()
 
-def create_token(user_id: int) -> str:
+def create_token(user_id: int, is_superuser: bool) -> str:
 
     payload = {
         "id": user_id,
+        "is_superuser":is_superuser,
         "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24),
         "iat": datetime.datetime.utcnow()
     }

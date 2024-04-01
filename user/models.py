@@ -4,7 +4,7 @@ from django.contrib.auth import models as auth_models
 # Create your models here.
 #! Help us to make user using command 
 class UserManager(auth_models.BaseUserManager):
-
+    
     def create_user(self, first_name: str, last_name: str, email: str,image :str = None,password: str = None, is_staff=False, is_superuser = False) -> "User":
         if not email:
             raise ValueError("User must have an email")

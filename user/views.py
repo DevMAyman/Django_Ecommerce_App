@@ -22,7 +22,7 @@ class LoginApi(views.APIView):
         if not user.check_password(raw_password=password):
             raise exceptions.AuthenticationFailed("Invalid Credentials")
         
-        token = services.create_token(user_id=user.id)
+        token = services.create_token(user_id=user.id,is_superuser=user.is_superuser)
         resp = response.Response()
         resp.set_cookie(key='jwt',value=token, httponly=True)
         return resp

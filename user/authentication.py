@@ -19,12 +19,16 @@ class CustomUserAuthentication(authentication.BaseAuthentication):
         
         try:
             jwt_secret = os.environ.get('JWT_SECRET')
-            print(jwt_secret)
             payload = jwt.decode(token,jwt_secret,algorithms=['HS256'])
         except:
             raise exceptions.AuthenticationFailed("Unauthorized")
 
-        user = models.User.objects.filter(id=payload["id"]).first()
+        user = models.User.objects.filter(id=payload["id"], is_superuser=False).first()
+
+        if user is None:
+            raise exceptions.AuthenticationFailed('User does not exist or is a superuser')
+
         return(user,None)
+        
     
 
