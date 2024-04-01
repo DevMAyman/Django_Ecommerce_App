@@ -3,6 +3,10 @@ black==24.3.0
 certifi==2024.2.2
 charset-normalizer==3.3.2
 click==8.1.7
+black==24.3.0
+certifi==2024.2.2
+charset-normalizer==3.3.2
+click==8.1.7
 dj-database-url==2.1.0
 Django==5.0.3
 django-cors-headers==4.3.1
@@ -26,6 +30,7 @@ sqlparse==0.4.4
 stripe==8.9.0
 tomli==2.0.1
 typing_extensions==4.10.0
+urllib3==2.2.1
 urllib3==2.2.1
 whitenoise==6.6.0
 python-decouple==3.8

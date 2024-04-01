@@ -38,15 +38,17 @@ INSTALLED_APPS = [
     'payment.apps.PaymentConfig',
     'user',
     'cart',
-    'products.apps.ProductsConfig',
-    'categories.apps.CategoriesConfig',
+    'Order.apps.OrderConfig',
+    'Shipment.apps.ShipmentConfig',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'products.apps.ProductsConfig',
+    'categories.apps.CategoriesConfig',
 ]
 
 
@@ -86,11 +88,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce',
-        'USER':'root',
-        'PASSWORD': os.environ.get('LOCAL_PASSWORD'),
-        'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'NAME': 'Ecommerce',           # Replace with your database name
+        'USER':  'root',             # Replace with PGUSER from Railway Variables
+        'PASSWORD': os.environ.get('REMOTE_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
+        'PORT': '3306',               # Replace with PGPORT from Railway Variables
+        'HOST' : '127.0.0.1'
     }
 }
 
