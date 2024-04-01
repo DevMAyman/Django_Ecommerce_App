@@ -20,15 +20,9 @@ class ShipmentSerializer(serializers.ModelSerializer):
             "country",
             "zip_code",
             "shipment_creation_date",
-            "delivery_date",
-            "status",
         ]
 
         for field in fields_to_validate:
             validate_data_existence(data, field)
 
-        if data["delivery_date"] < data["shipment_creation_date"]:
-            raise serializers.ValidationError(
-                "the delivery date cannot be before the shipment creation date"
-            )
         return data

@@ -1,15 +1,12 @@
 import datetime
-
 from django.core.exceptions import ValidationError
 from django.db import models
+from user.models import User 
 
+ 
 
 class Shipment(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('shipped', 'Shipped'),
-        ('delivered', 'Delivered'),
-    ]
+   
     
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
@@ -17,8 +14,9 @@ class Shipment(models.Model):
     country = models.CharField(max_length=50)
     zip_code = models.CharField(max_length=10)
     shipment_creation_date = models.DateField(default=datetime.date.today)
-    delivery_date = models.DateField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    user = models.ForeignKey(User, on_delete=models.CASCADE,limit_choices_to={'is_superuser': 0})
+
+    
     # add customer fk
 
     def clean_fields(self, exclude=None):

@@ -25,7 +25,7 @@ load_dotenv(dotenv_path)
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -88,9 +88,9 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Ecommerce',           # Replace with your database name
+        'NAME': 'ecommerce',           # Replace with your database name
         'USER':  'root',             # Replace with PGUSER from Railway Variables
-        'PASSWORD': os.environ.get('REMOTE_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
+        'PASSWORD': os.environ.get('LOCAL_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
         'PORT': '3306',               # Replace with PGPORT from Railway Variables
         'HOST' : '127.0.0.1'
     }
