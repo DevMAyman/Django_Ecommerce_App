@@ -6,6 +6,7 @@ import jwt
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 dotenv_path = os.path.join(BASE_DIR, 'config', '.env')
 load_dotenv(dotenv_path)
@@ -58,7 +59,8 @@ def create_token(user_id: int, is_superuser: bool) -> str:
         "iat": datetime.datetime.utcnow()
     }
 
-    jwt_secret = os.environ.get('JWT_SECRET')
+    # jwt_secret = os.environ.get('JWT_SECRET')
+    jwt_secret = config('JWT_SECRET')
     token = jwt.encode(payload, jwt_secret, algorithm='HS256')
 
     return token
