@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from decouple import config
 from dotenv import load_dotenv
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,8 +23,9 @@ load_dotenv(dotenv_path)
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
+# SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -35,15 +35,22 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'payment.apps.PaymentConfig',
+    'user',
+    'cart',
+    'Order.apps.OrderConfig',
+    'Shipment.apps.ShipmentConfig',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'cart',
+    'products.apps.ProductsConfig',
+    'categories.apps.CategoriesConfig',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,7 +65,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
-    {
+    {   
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
@@ -81,11 +88,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce',
-        'USER':'root',
-        'PASSWORD': os.environ.get('LOCAL_PASSWORD'),
-        'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'NAME': 'ecommerce',           # Replace with your database name
+        'USER':  'root',             # Replace with PGUSER from Railway Variables
+        'PASSWORD': os.environ.get('LOCAL_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
+        'PORT': '3306',               # Replace with PGPORT from Railway Variables
+        'HOST' : '127.0.0.1'
     }
 }
 
@@ -130,3 +137,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTH_USER_MODEL = "user.User"
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True

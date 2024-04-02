@@ -1,7 +1,14 @@
 from django.contrib import admin
-from django.urls import path , include
+from django.urls import path, include , include
 from cart import views
 from rest_framework.routers import DefaultRouter
+from rest_framework.urlpatterns import format_suffix_patterns
+from user.authentication import CustomUserAuthentication
+from rest_framework.permissions import IsAuthenticated
+
+
+
+
 
 router = DefaultRouter()
 router.register('cart',views.Viewset_Cart)
@@ -10,8 +17,15 @@ router.register('wishlist',views.Viewset_Wishlist)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cartitem/searchitems/<int:cardId>/', views.searchCartItems),
-    path('cart/searchcustomercart/<int:customerId>/', views.searchCustomerCart),
-    path('cart/searchcustomerwishlists/<int:customerId>/', views.searchCustomerWishlists),
+    path('users/',include("user.urls")),
+    path('cartitem/searchitems/<int:cardId>/', views.searchCartItems.as_view()),
+    path('cart/searchcustomercart/<int:customerId>/', views.searchCustomerCart.as_view()),
+    path('cart/searchcustomerwishlists/<int:customerId>/', views.searchCustomerWishlists.as_view()),
     path('',include(router.urls)),
+    path('',include('products.urls')),
+    path('',include('categories.urls')),
+    path('',include('Shipment.urls')),
+    path('', include('Order.urls')),
 ]
+
+
