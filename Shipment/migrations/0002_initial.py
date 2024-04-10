@@ -10,16 +10,18 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("payment", "0001_initial"),
+        ("Shipment", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name="payment",
-            name="user_payment",
+            model_name="shipment",
+            name="user",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+                limit_choices_to={"is_superuser": 0},
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
             ),
         ),
     ]
