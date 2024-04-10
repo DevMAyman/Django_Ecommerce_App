@@ -13,7 +13,7 @@ class Shipment(models.Model):
     state = models.CharField(max_length=20)
     country = models.CharField(max_length=50)
     zip_code = models.CharField(max_length=10)
-    shipment_creation_date = models.DateField(default=datetime.date.today)
+    phone = models.CharField(max_length=15)
     user = models.ForeignKey(User, on_delete=models.CASCADE,limit_choices_to={'is_superuser': 0})
 
     
