@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'Order.apps.OrderConfig',
     'Shipment.apps.ShipmentConfig',
     'rest_framework',
-    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -67,6 +66,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'cloudinary'   
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

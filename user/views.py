@@ -13,8 +13,9 @@ class RegisterApi(views.APIView):
         try:
             serializer = user_serializer.UserSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            data = serializer.validated_data
-            serializer.instance = services.create_user(user_dc=data)
+            validated_data = serializer.validated_data  # Get validated data from serializer
+            user_instance = services.UserDataClass(**validated_data)  # Create instance of UserDataClass from validated data
+            serializer.instance = services.create_user(user_dc=user_instance)
             return response.Response(data=serializer.data)
         except IntegrityError as e:
             if 'Duplicate entry' in str(e) and 'email' in str(e):
