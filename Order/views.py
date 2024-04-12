@@ -13,8 +13,9 @@ from rest_framework.decorators import action
 
 
 class OrderView(viewsets.ModelViewSet):
-    # authentication_classes = (authentication.CustomUserAuthentication,)
-    # permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes=(authentication.CustomUserAuthentication,)
+    permission_classes=(permissions.IsAuthenticated,)
+    queryset = Order.objects.all()
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 
@@ -78,6 +79,8 @@ class OrderView(viewsets.ModelViewSet):
 
 
 class OrderItemView(viewsets.ModelViewSet):
+    authentication_classes=(authentication.CustomUserAuthentication,)
+    permission_classes=(permissions.IsAuthenticated,)
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
 

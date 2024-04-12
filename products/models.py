@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from user.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from cloudinary.models import CloudinaryField
 
 
 # Create your models here.
@@ -14,7 +15,8 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE) 
     description=models.TextField()
     price=models.DecimalField(max_digits=10,decimal_places=2)
-    thumbnail = models.ImageField(upload_to='photos/products/%y/%m/%d')
+    # stripe_name = models.CharField(max_length=300, default='NoName') # Assuming you have a 'name' attribute in your Product model
+    thumbnail = CloudinaryField('image')
     rating = models.IntegerField(default=0, editable=False) 
     stock = models.IntegerField(default=0)
     created_at=models.DateTimeField(default=timezone.now)
@@ -23,7 +25,7 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='photos/products/%y/%m/%d')
+    image = CloudinaryField('image')
     def __str__(self):
         return f"Image for {self.product.name}"   
 

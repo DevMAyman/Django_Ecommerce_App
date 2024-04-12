@@ -1,15 +1,24 @@
 from rest_framework import serializers
-from . import services 
+from .models import User
 
-class UserSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True) #! Do not make any one change id by api
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
-    email = serializers.CharField()
-    image = serializers.ImageField()
-    password = serializers.CharField(write_only=True) #!Do not return password ever in api response
-    
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'email', 'image', 'password', 'phone']
+        extra_kwargs = {
+            'password': {'write_only': True},  # Do not include 'password' field in response
+            'id': {'read_only': True},         # Do not allow 'id' to be updated via API
+        }
 
-    def to_internal_value(self, data):
-        data = super().to_internal_value(data)
-        return services.UserDataClass(**data)
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        # Construct the full image URL using Cloudinary transformation
+        if representation.get('image'):
+            representation['image'] = instance.image.build_url(transformation=[
+                {'width': 200, 'height': 200, 'crop': 'thumb', 'gravity': 'face'},  # Example transformation
+            ])
+        return representation
+
+    def update(self, instance, validated_data):
+        # Override update method to handle image update
+        return super().update(instance, validated_data)
