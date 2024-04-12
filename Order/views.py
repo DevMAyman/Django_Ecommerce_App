@@ -2,7 +2,7 @@ from django.utils import timezone
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializer import OrderSerializer, OrderItemSerializer
-from .models import Order, OrderItem, Product
+from .models import Order, OrderItem, Product, User
 from rest_framework import viewsets, permissions
 from rest_framework import filters, status
 from user import authentication
@@ -10,43 +10,95 @@ from datetime import datetime, timezone
 from products.serializers import ProductSerializer
 from django.db.models import Q, Prefetch
 from rest_framework.decorators import action
-
+from django.db import transaction
 
 class OrderView(viewsets.ModelViewSet):
-    # authentication_classes = (authentication.CustomUserAuthentication,)
-    # permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes=(authentication.CustomUserAuthentication,)
+    permission_classes=(permissions.IsAuthenticated,)
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 
-    def get_queryset(self):
-        queryset = super().get_queryset().filter(user=self.request.user)
-        user = self.request.query_params.get("user")
+    def create(self, request, *args, **kwargs):
+        user_id = request.data.get('user')
+        try:
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        if user:
-            queryset = queryset.filter(Q(user=user))
+        order_items_data = request.data.pop('items', [])
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        with transaction.atomic():
+            order_instance = serializer.save(user=user)  
 
-        queryset = queryset.prefetch_related(
-            Prefetch("items", queryset=OrderItem.objects.all(), to_attr="order_items")
-        )
+            for item_data in order_items_data:
+                
+                item_data['order_id'] = order_instance.id
+                order_item_serializer = OrderItemSerializer(data=item_data)
+                order_item_serializer.is_valid(raise_exception=True)
+                order_item_serializer.save()
+        
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+# {
+#   "total_price": 2000,
+#   "shipment_id": 1,
+#   "order_creation_date":"2024-04-12T22:24:00Z",
+#   "delivery_date": "2024-04-30T22:24:00Z",
+#   "status": "pending",
+#   "user": 1,
+#   "items": [
+#     {
+#       "quantity": 1,
+#       "price": 1000,
+#       "product": 1
+#     },
+#     {
+#       "quantity": 1,
+#       "price": 2000,
+#       "product": 2
+#     }
+#   ]
+# }
 
-        return queryset
 
-    def perform_create(self, serializer):
-        print(self.request.user)
-        serializer.save(user=self.request.user)
+# class OrderView(viewsets.ModelViewSet):
+#     authentication_classes=(authentication.CustomUserAuthentication,)
+#     permission_classes=(permissions.IsAuthenticated,)
+#     queryset = Order.objects.all()
+#     serializer_class = OrderSerializer
+#     queryset = Order.objects.all()
 
-    @action(detail=True, methods=["POST"])
-    def cancel_order(self, request, pk=None):
-        order = self.get_object()
-        if order.status == "Delivered" or order.status == "Canceled":
-            return Response(
-                {"message": "Order cannot be canceled"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+#     def get_queryset(self):
+#         queryset = super().get_queryset().filter(user=self.request.user)
+#         user = self.request.query_params.get("user")
 
-        order.status = "Canceled"
-        order.save()
-        return Response({"message": "Order cancelled successfully"})
+#         if user:
+#             queryset = queryset.filter(Q(user=user))
+
+#         queryset = queryset.prefetch_related(
+#             Prefetch("items", queryset=OrderItem.objects.all(), to_attr="order_items")
+#         )
+
+#         return queryset
+
+#     def perform_create(self, serializer):
+#         print(self.request.user)
+#         serializer.save(user=self.request.user)
+
+#     @action(detail=True, methods=["POST"])
+#     def cancel_order(self, request, pk=None):
+#         order = self.get_object()
+#         if order.status == "Delivered" or order.status == "Canceled":
+#             return Response(
+#                 {"message": "Order cannot be canceled"},
+#                 status=status.HTTP_400_BAD_REQUEST,
+#             )
+
+#         order.status = "Canceled"
+#         order.save()
+#         return Response({"message": "Order cancelled successfully"})
 
 
 # class OrderView(viewsets.ModelViewSet):
@@ -78,6 +130,8 @@ class OrderView(viewsets.ModelViewSet):
 
 
 class OrderItemView(viewsets.ModelViewSet):
+    authentication_classes=(authentication.CustomUserAuthentication,)
+    permission_classes=(permissions.IsAuthenticated,)
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
 
@@ -106,4 +160,3 @@ class OrderItemView(viewsets.ModelViewSet):
         data["product"] = product_serializer.data
 
         return Response(data)
-

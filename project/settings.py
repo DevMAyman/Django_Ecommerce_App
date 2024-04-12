@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'Order.apps.OrderConfig',
     'Shipment.apps.ShipmentConfig',
     'rest_framework',
-    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

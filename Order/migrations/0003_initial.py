@@ -10,13 +10,14 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ("Order", "0002_initial"),
         ("products", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name="rating",
+            model_name="order",
             name="user",
             field=models.ForeignKey(
                 limit_choices_to={"is_superuser": 0},
@@ -24,8 +25,20 @@ class Migration(migrations.Migration):
                 to=settings.AUTH_USER_MODEL,
             ),
         ),
-        migrations.AlterUniqueTogether(
-            name="rating",
-            unique_together={("user", "product")},
+        migrations.AddField(
+            model_name="orderitem",
+            name="order_id",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="items",
+                to="Order.order",
+            ),
+        ),
+        migrations.AddField(
+            model_name="orderitem",
+            name="product",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="products.product"
+            ),
         ),
     ]

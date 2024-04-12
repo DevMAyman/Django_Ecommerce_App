@@ -31,12 +31,11 @@ class OrderItem(models.Model):
     quantity = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     order_id = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)
-    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     # add product fk
     class Meta:
         verbose_name = "OrderItem"
         verbose_name_plural = "OrderItem"
-        
     def __str__(self):
         return f"{self.id}"
     
