@@ -15,6 +15,7 @@ from django.db import transaction
 class OrderView(viewsets.ModelViewSet):
     authentication_classes=(authentication.CustomUserAuthentication,)
     permission_classes=(permissions.IsAuthenticated,)
+    queryset = Order.objects.all()
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 

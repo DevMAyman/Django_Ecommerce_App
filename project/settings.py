@@ -13,19 +13,33 @@ import os
 from decouple import config
 from dotenv import load_dotenv
 from pathlib import Path
+import cloudinary
+import cloudinary.uploader
+from cloudinary.utils import cloudinary_url
+    
+cloudinary.config( 
+  cloud_name = "dct8gxufm", 
+  api_key = "353148457964129", 
+  api_secret = "5o3vTh76Mg-QqhhmagIfHnDis5c" 
+)
 
+cloudinary.uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
+                             public_id="olympic_flag")
+url, options = cloudinary_url("olympic_flag", width=100, height=150, crop="fill")
+
+  
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-dotenv_path = os.path.join(BASE_DIR, 'config', '.env')
+dotenv_path = os.path.join(BASE_DIR, '.env')
 load_dotenv(dotenv_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
-SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -50,7 +64,9 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'categories.apps.CategoriesConfig',
     'corsheaders',
+    'cloudinary'   
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,7 +77,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -143,5 +158,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "user.User"
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5177"
+]
 CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIES_SECURE=True

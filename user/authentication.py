@@ -13,16 +13,14 @@ load_dotenv(dotenv_path)
 
 class CustomUserAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
-        print(555847)
-        token = request.COOKIES.get('jwt')
-
+        # token = request.COOKIES.get('jwt')
+        token = request.headers.get('X-CSRFToken')
         if not token:
             return None
         
         try:
             # jwt_secret = os.environ.get('JWT_SECRET')
             jwt_secret = config('JWT_SECRET')
-            print(1111,jwt_secret)
             payload = jwt.decode(token,jwt_secret,algorithms=['HS256'])
         except:
             raise exceptions.AuthenticationFailed("Unauthorized")
