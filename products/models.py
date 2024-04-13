@@ -11,14 +11,14 @@ from cloudinary.models import CloudinaryField
 
 # Create your models here.
 class Product(models.Model):
-    name=models.CharField(max_length=30)
+    name=models.CharField(max_length=30,unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE) 
     description=models.TextField()
     price=models.DecimalField(max_digits=10,decimal_places=2)
     # stripe_name = models.CharField(max_length=300, default='NoName') # Assuming you have a 'name' attribute in your Product model
     thumbnail = CloudinaryField('image')
     rating = models.IntegerField(default=0, editable=False) 
-    stock = models.IntegerField(default=0)
+    stock = models.IntegerField(default=0,validators=[MinValueValidator(0)])
     created_at=models.DateTimeField(default=timezone.now)
     def __str__(self) :
         return self.name

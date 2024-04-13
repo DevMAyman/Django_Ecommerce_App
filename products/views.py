@@ -76,8 +76,8 @@ def getProductById(request, id):
 
 
 class Viewset_Ratings(viewsets.ModelViewSet):
-    authentication_classes = (authentication.CustomUserAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
+    # authentication_classes = (authentication.CustomUserAuthentication,)
+    # permission_classes = (permissions.IsAuthenticated,)
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
 

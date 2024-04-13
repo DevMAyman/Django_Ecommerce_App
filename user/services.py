@@ -63,7 +63,7 @@ def create_token(user_id: int, is_superuser: bool) -> str:
     }
 
     # jwt_secret = os.environ.get('JWT_SECRET')
-    jwt_secret = config('JWT_SECRET')
-    token = jwt.encode(payload, jwt_secret, algorithm='HS256')
+    # jwt_secret = config('JWT_SECRET')
+    token = jwt.encode(payload, "sdsfdsdf", algorithm='HS256')
 
     return token
