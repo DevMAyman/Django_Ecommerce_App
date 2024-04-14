@@ -102,14 +102,25 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ecommerce',           # Replace with your database name
+#         'USER':  'root',             # Replace with PGUSER from Railway Variables
+#         'PASSWORD': os.environ.get('LOCAL_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
+#         'PORT': '3306',               # Replace with PGPORT from Railway Variables
+#         'HOST' : '127.0.0.1'
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce',           # Replace with your database name
+        'NAME': 'railway',           # Replace with your database name
         'USER':  'root',             # Replace with PGUSER from Railway Variables
-        'PASSWORD': os.environ.get('LOCAL_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
-        'PORT': '3306',               # Replace with PGPORT from Railway Variables
-        'HOST' : '127.0.0.1'
+        'PASSWORD': 'DqANLscyzvTwhKbuWpqRCnyExbROeAjB',      # Replace with PGPASSWORD from Railway Variables
+        'PORT': '10987' ,              # Replace with PGPORT from Railway Variables
+        'HOST' : 'monorail.proxy.rlwy.net',
     }
 }
 
