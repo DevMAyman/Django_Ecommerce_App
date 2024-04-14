@@ -77,8 +77,8 @@ class StripCheckoutView(APIView):
             checkout_session = stripe.checkout.Session.create(
                     line_items=line_items,
                     mode='payment',
-                    success_url='http://localhost:5173' + '?success=true&session_id={CHECKOUT_SESSION_ID}',
-                    cancel_url='http://localhost:5173' + '?canceled=true',
+                    success_url='https://django-ecommerce-ui.vercel.app/' + '?success=true&session_id={CHECKOUT_SESSION_ID}',
+                    cancel_url='https://django-ecommerce-ui.vercel.app/' + '?canceled=true',
                 )
             
         
