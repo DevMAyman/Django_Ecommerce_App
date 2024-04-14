@@ -116,23 +116,22 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 
 
-if not DEBUG:
-    DATABASES = {
-        "default" : dj_database_url.parse(os.environ.get("DATABASE_URL")),
+DATABASES = {
+    "default" : dj_database_url.parse(os.environ.get("DATABASE_URL")),
         
-    }
-    
-else:
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce',           # Replace with your database name
-        'USER':  'root',             # Replace with PGUSER from Railway Variables
-        'PASSWORD': os.environ.get('LOCAL_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
-        'PORT': '3306',               # Replace with PGPORT from Railway Variables
-        'HOST' : '127.0.0.1'
-    }
 }
+    
+# else:
+#     DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ecommerce',           # Replace with your database name
+#         'USER':  'root',             # Replace with PGUSER from Railway Variables
+#         'PASSWORD': os.environ.get('LOCAL_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
+#         'PORT': '3306',               # Replace with PGPORT from Railway Variables
+#         'HOST' : '127.0.0.1'
+#     }
+# }
     
 
 
