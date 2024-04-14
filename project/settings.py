@@ -16,6 +16,7 @@ from pathlib import Path
 import cloudinary
 import cloudinary.uploader
 from cloudinary.utils import cloudinary_url
+import dj_database_url
     
 cloudinary.config( 
   cloud_name = "dct8gxufm", 
@@ -37,11 +38,11 @@ load_dotenv(dotenv_path)
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', "s!12zl_nvk@^gyzg@2*-9&qx$20w9#qzv%oc4gbmsoot8c*vl&")
 
-SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', "True")=='True'
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost','django-ecommerce-app-1.onrender.com']
 
@@ -103,26 +104,36 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ecommerce',           # Replace with your database name
-#         'USER':  'root',             # Replace with PGUSER from Railway Variables
-#         'PASSWORD': os.environ.get('LOCAL_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
-#         'PORT': '3306',               # Replace with PGPORT from Railway Variables
-#         'HOST' : '127.0.0.1'
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': 'railway',           # Replace with your database name
+#             'USER':  'root',             # Replace with PGUSER from Railway Variables
+#             'PASSWORD': 'DqANLscyzvTwhKbuWpqRCnyExbROeAjB',      # Replace with PGPASSWORD from Railway Variables
+#             'PORT': '10987' ,              # Replace with PGPORT from Railway Variables
+#             'HOST' : 'monorail.proxy.rlwy.net',
+#         }
 #     }
-# }
 
-DATABASES = {
+
+
+if not DEBUG:
+    DATABASES = {
+        "default" : dj_database_url.parse(os.environ.get("DATABASE_URL")),
+        
+    }
+    
+else:
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'railway',           # Replace with your database name
+        'NAME': 'ecommerce',           # Replace with your database name
         'USER':  'root',             # Replace with PGUSER from Railway Variables
-        'PASSWORD': 'DqANLscyzvTwhKbuWpqRCnyExbROeAjB',      # Replace with PGPASSWORD from Railway Variables
-        'PORT': '10987' ,              # Replace with PGPORT from Railway Variables
-        'HOST' : 'monorail.proxy.rlwy.net',
+        'PASSWORD': os.environ.get('LOCAL_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
+        'PORT': '3306',               # Replace with PGPORT from Railway Variables
+        'HOST' : '127.0.0.1'
     }
 }
+    
 
 
 # Password validation
