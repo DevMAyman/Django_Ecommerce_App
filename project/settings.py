@@ -44,7 +44,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', "s!12zl_nvk@^gyzg@2*-9&qx$20w9#qzv%oc4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', "True")=='True'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','django-ecommerce-app-1.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost','django-ecommerce-app-1.onrender.com','https://django-ecommerce-ui.vercel.app/']
 
 
 # Application definition
