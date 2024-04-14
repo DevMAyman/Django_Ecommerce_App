@@ -117,7 +117,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 
 DATABASES = {
-    "default" : dj_database_url.parse(os.environ.get("DATABASE_URL")),
+    "default" : dj_database_url.parse('postgres://ecommerce_owx8_user:i9dO44oJ2UYilKmYy7yGumUyv2kBkmw4@dpg-codn55i0si5c7393rrig-a.oregon-postgres.render.com/ecommerce_owx8'),
         
 }
     
