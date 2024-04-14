@@ -30,19 +30,18 @@ class StripCheckoutView(APIView):
             token = request.headers.get('X-CSRFToken')
             jwt_secret = config('JWT_SECRET')
             payload = jwt.decode(token,jwt_secret,algorithms=['HS256'])
-
             user = User.objects.get(id=payload["id"])
 
             cart = Cart.objects.filter(customer_id=user.id).first()
 
-            shipment = Shipment.objects.get(user=user)
+            shipment = Shipment.objects.get(id=request.data['shipment_id'])
 
             cart_items = Cart_item.objects.filter(cart_id=cart.id)
 
             order = Order.objects.create(
-                total_price = 5000, #from front
+                total_price = request.data['total_price'], 
                 shipment_id=shipment,
-                delivery_date = '2024-04-14',
+                delivery_date = request.data['delivery_date'],
                 user=user
             )
 
@@ -82,11 +81,7 @@ class StripCheckoutView(APIView):
                     cancel_url='http://localhost:5173' + '?canceled=true',
                 )
             
-            cart_items.delete()
-
-            for order_item in order_items:
-                order_item.product.stock -= order_item.quantity
-                order_item.product.save()
+        
 
             return Response({
                 'redirect_to': checkout_session.url

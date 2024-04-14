@@ -15,6 +15,7 @@ urlpatterns = [
     path('cartitem/searchitems/<int:cardId>/', views.searchCartItems.as_view()),
     path('cart/searchcustomercart/<int:customerId>/', views.searchCustomerCart.as_view()),
     path('cart/searchcustomerwishlists/<int:customerId>/', views.searchCustomerWishlists.as_view()),
+    path('cart-product',views.CartProduct.as_view()),
     path('',include(router.urls)),
 ]
 
