@@ -20,7 +20,6 @@ pathspec==0.12.1
 pillow==10.2.0
 platformdirs==4.2.0
 psycopg2==2.9.9
-psycopg2-binary==2.9.9
 PyJWT==2.8.0
 python-decouple==3.8
 python-dotenv==1.0.1
