@@ -9,7 +9,7 @@ from rest_framework.pagination import PageNumberPagination
 
 
 class ProductPagination(PageNumberPagination):
-    page_size = 10
+    page_size = 8
     page_size_query_param = 'page_size'
     max_page_size = 100
 
@@ -80,6 +80,18 @@ class Viewset_Ratings(viewsets.ModelViewSet):
     # permission_classes = (permissions.IsAuthenticated,)
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
+
+@api_view(['GET'])
+def getRatingsByProduct(request, product_id):
+    try:
+        ratings = Rating.objects.filter(product_id=product_id)
+    except Rating.DoesNotExist:
+        return Response({"message": "Ratings not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    # GET
+    if request.method == 'GET':
+        serializer = RatingSerializer(ratings, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)    
 
 @api_view(['GET'])
 def GetProductsImages(request, product_id):

@@ -10,4 +10,6 @@ urlpatterns = [
     path('products/', views.GetAllProducts),
     path('products/<int:id>/', views.getProductById),
     path('products/<int:product_id>/images/', views.GetProductsImages),
+    path('products/<int:product_id>/ratings/', views.getRatingsByProduct), 
+
 ]
