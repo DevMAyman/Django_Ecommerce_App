@@ -1,4 +1,3 @@
-# signals.py
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Product
@@ -11,8 +10,6 @@ def create_stripe_product(sender, instance, created, **kwargs):
         try:
             stripe_product= stripe.Product.create(name=instance.name)
             print(stripe_product)
-            # instance.stripe_name = stripe_product.name
             instance.save()
-
         except stripe.error.StripeError as e:
             print("Failed to create product in Stripe:", e)

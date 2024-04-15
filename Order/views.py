@@ -1,10 +1,12 @@
 from django.utils import timezone
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 from .serializer import OrderSerializer, OrderItemSerializer
-from .models import Order, OrderItem, Product, User
-from rest_framework import viewsets, permissions
-from rest_framework import filters, status
+from .models import Order, OrderItem
+from rest_framework import generics, mixins, viewsets, permissions
+from rest_framework import filters
 from user import authentication
 from datetime import datetime, timezone
 from products.serializers import ProductSerializer
@@ -12,9 +14,11 @@ from django.db.models import Q, Prefetch
 from rest_framework.decorators import action
 from django.db import transaction
 
+
+
 class OrderView(viewsets.ModelViewSet):
-    authentication_classes=(authentication.CustomUserAuthentication,)
-    permission_classes=(permissions.IsAuthenticated,)
+    # authentication_classes=(authentication.CustomUserAuthentication,)
+    # permission_classes=(permissions.IsAuthenticated,)
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
@@ -119,20 +123,18 @@ class OrderView(viewsets.ModelViewSet):
 #         )
 #     return super().update(request, *args, **kwargs)
 
-# def destroy(self, request, *args, **kwargs):
-#     instance = self.get_object()
-#     order_creation_date = instance.order_creation_date
-#     if (datetime.now(timezone.utc) - order_creation_date).total_seconds() > 5 * 60:
-#         return Response(
-#             {"error": "Cannot delete orders older than 4 days."},
-#             status=status.HTTP_403_FORBIDDEN,
-#         )
-#     return super().destroy(request, *args, **kwargs)
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        order_creation_date = instance.order_creation_date
+        if (datetime.now(timezone.utc) - order_creation_date).total_seconds() > 5*60:
+            return Response({"error": "Cannot delete orders older than 4 days."}, status=status.HTTP_403_FORBIDDEN)
+        return super().destroy(request, *args, **kwargs)
+
 
 
 class OrderItemView(viewsets.ModelViewSet):
-    authentication_classes=(authentication.CustomUserAuthentication,)
-    permission_classes=(permissions.IsAuthenticated,)
+    # authentication_classes=(authentication.CustomUserAuthentication,)
+    # permission_classes=(permissions.IsAuthenticated,)
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
 

@@ -12,6 +12,7 @@ djangorestframework==3.15.1
 djangorestframework-simplejwt==5.3.1
 gunicorn==21.2.0
 idna==3.6
+logger==1.4
 mypy-extensions==1.0.0
 mysqlclient==2.2.4
 packaging==24.0

@@ -16,6 +16,7 @@ from pathlib import Path
 import cloudinary
 import cloudinary.uploader
 from cloudinary.utils import cloudinary_url
+import dj_database_url
     
 cloudinary.config( 
   cloud_name = "dct8gxufm", 
@@ -37,13 +38,13 @@ load_dotenv(dotenv_path)
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', "s!12zl_nvk@^gyzg@2*-9&qx$20w9#qzv%oc4gbmsoot8c*vl&")
 
-SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', "True")=='True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost','django-ecommerce-app-1.onrender.com','https://django-ecommerce-ui.vercel.app/']
 
 
 # Application definition
@@ -102,16 +103,36 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': 'railway',           # Replace with your database name
+#             'USER':  'root',             # Replace with PGUSER from Railway Variables
+#             'PASSWORD': 'DqANLscyzvTwhKbuWpqRCnyExbROeAjB',      # Replace with PGPASSWORD from Railway Variables
+#             'PORT': '10987' ,              # Replace with PGPORT from Railway Variables
+#             'HOST' : 'monorail.proxy.rlwy.net',
+#         }
+#     }
+
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce',           # Replace with your database name
-        'USER':  'root',             # Replace with PGUSER from Railway Variables
-        'PASSWORD': os.environ.get('LOCAL_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
-        'PORT': '3306',               # Replace with PGPORT from Railway Variables
-        'HOST' : '127.0.0.1'
-    }
+    "default" : dj_database_url.parse('postgres://ecommerce_owx8_user:i9dO44oJ2UYilKmYy7yGumUyv2kBkmw4@dpg-codn55i0si5c7393rrig-a.oregon-postgres.render.com/ecommerce_owx8'),
+        
 }
+    
+# else:
+#     DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ecommerce',           # Replace with your database name
+#         'USER':  'root',             # Replace with PGUSER from Railway Variables
+#         'PASSWORD': os.environ.get('LOCAL_PASSWORD'),      # Replace with PGPASSWORD from Railway Variables
+#         'PORT': '3306',               # Replace with PGPORT from Railway Variables
+#         'HOST' : '127.0.0.1'
+#     }
+# }
+    
 
 
 # Password validation
@@ -149,6 +170,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets') # for deployment
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -159,7 +184,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "user.User"
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173"
+     'https://django-ecommerce-ui.vercel.app'
 ]
 CORS_ALLOW_CREDENTIALS = True
-CSRF_COOKIES_SECURE=True

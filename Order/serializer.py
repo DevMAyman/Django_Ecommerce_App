@@ -1,13 +1,13 @@
 from rest_framework import serializers
+
+from products.serializers import ProductSerializer
 from .models import Order, OrderItem
-from products.serializers import ProductSerializer  # Assuming you have a serializer for Product model
 
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = "__all__"
-        read_only_fields = ['user'] 
 
     def validate(self, data):
         total_price = data.get("total_price")
@@ -19,14 +19,20 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    product_id = ProductSerializer()
+    product_id = ProductSerializer()  # Serialize product_id with ProductSerializer
+
     class Meta:
         model = OrderItem
         fields = "__all__"
-    
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        product_data = instance.product
-        product_serializer = ProductSerializer(product_data)
-        representation['product'] = product_serializer.data
-        return representation
+
+    def validate(self, data):
+        price = data.get("price")
+        quantity = data.get("quantity")
+
+        if price is not None and price < 0:
+            raise serializers.ValidationError("Price can not be negative")
+
+        if quantity is not None and quantity < 0:
+            raise serializers.ValidationError("Quantity can not be less than zero")
+
+        return data
