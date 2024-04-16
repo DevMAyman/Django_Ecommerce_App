@@ -7,7 +7,6 @@ from .serializers import ProductSerializer, ProductImageSerializer, RatingSerial
 from user import authentication
 from rest_framework.pagination import PageNumberPagination
 
-
 class ProductPagination(PageNumberPagination):
     page_size = 8
     page_size_query_param = 'page_size'
@@ -61,7 +60,6 @@ def GetAllProducts(request):
         serializer = ProductSerializer(paginated_queryset, many=True)
         return paginator.get_paginated_response(serializer.data)
 
-    
 @api_view(['GET'])
 def getProductById(request, id):
     try:
@@ -74,12 +72,39 @@ def getProductById(request, id):
         serializer = ProductSerializer(product)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
 class Viewset_Ratings(viewsets.ModelViewSet):
-    # authentication_classes = (authentication.CustomUserAuthentication,)
-    # permission_classes = (permissions.IsAuthenticated,)
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
+
+@api_view(['GET', 'POST', 'PUT'])
+def manageUserRating(request, user_id, product_id):
+    try:
+        rating = Rating.objects.get(user=user_id, product=product_id)
+    except Rating.DoesNotExist:
+        rating = None
+
+    if request.method == 'GET':
+        if rating:
+            serializer = RatingSerializer(rating)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "Rating not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    elif request.method == 'POST' or request.method == 'PUT':
+        user_rating = request.data.get('user_rating')
+
+        if not user_rating:
+            return Response({"message": "Invalid data"}, status=status.HTTP_400_BAD_REQUEST)
+
+        if rating:
+            rating.user_rating = user_rating
+            rating.save()
+        else:
+            rating = Rating.objects.create(user=user_id, product=product_id, user_rating=user_rating)
+            rating.save()
+
+        serializer = RatingSerializer(rating)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def getRatingsByProduct(request, product_id):
@@ -88,10 +113,18 @@ def getRatingsByProduct(request, product_id):
     except Rating.DoesNotExist:
         return Response({"message": "Ratings not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    # GET
-    if request.method == 'GET':
-        serializer = RatingSerializer(ratings, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)    
+    serializer = RatingSerializer(ratings, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def getRatingsByUser(request, user_id):
+    try:
+        ratings = Rating.objects.filter(user_id=user_id)
+    except Rating.DoesNotExist:
+        return Response({"message": "Ratings not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = RatingSerializer(ratings, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def GetProductsImages(request, product_id):
